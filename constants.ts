@@ -2,11 +2,11 @@ import { Hammer, Lightbulb, PenTool, Tv, Wrench, ShieldCheck, Clock, Award } fro
 import { NavItem, ServiceItem, PortfolioItem, StatItem, FeatureItem } from './types';
 
 export const NAV_LINKS: NavItem[] = [
-  { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Gallery', href: '/#gallery' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export const COMPANY_INFO = {

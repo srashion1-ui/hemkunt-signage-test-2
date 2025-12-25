@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useLocation } from 'react-router-dom';
 import { NAV_LINKS, COMPANY_INFO } from '../constants';
 import MagneticWrapper from './MagneticWrapper';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +17,25 @@ const Navbar: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLinkClick = (e: React.MouseEvent, href: string) => {
+    if (href.startsWith('/#')) {
+      const id = href.replace('/#', '');
+      // If we are already on home page, smoothly scroll
+      if (location.pathname === '/') {
+        e.preventDefault();
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          setIsOpen(false);
+        }
+      }
+      // If not on home page, the Link component will handle navigation to /, 
+      // and the Home component will handle the scroll via useEffect.
+    } else {
+      setIsOpen(false);
+    }
+  };
 
   return (
     <nav
@@ -26,7 +47,7 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between">
           
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
+          <Link to="/" className="flex items-center gap-2 group">
             <div className="w-10 h-10 bg-brand-600 rounded flex items-center justify-center transform group-hover:rotate-45 transition-transform duration-300">
               <span className="font-display font-bold text-xl text-white">H</span>
             </div>
@@ -34,30 +55,32 @@ const Navbar: React.FC = () => {
               <span className="font-display font-bold text-xl tracking-wide uppercase text-white">Hemkunt</span>
               <span className="text-xs text-brand-400 font-medium tracking-widest uppercase">Signage</span>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8">
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.label}
-                href={link.href}
+                to={link.href}
+                onClick={(e) => handleLinkClick(e, link.href)}
                 className="text-sm font-medium text-gray-300 hover:text-brand-400 transition-colors uppercase tracking-wider relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-brand-400 hover:after:w-full after:transition-all"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
 
           {/* CTA Button */}
           <div className="hidden md:block">
             <MagneticWrapper>
-              <a
-                href="#contact"
+              <Link
+                to="/#contact"
+                onClick={(e) => handleLinkClick(e, '/#contact')}
                 className="block px-6 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-display font-semibold tracking-wide uppercase text-sm rounded transition-all shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_25px_rgba(6,182,212,0.6)]"
               >
                 Get Estimate
-              </a>
+              </Link>
             </MagneticWrapper>
           </div>
 
@@ -84,14 +107,14 @@ const Navbar: React.FC = () => {
           >
             <div className="px-4 pt-4 pb-8 space-y-2 flex flex-col">
               {NAV_LINKS.map((link) => (
-                <a
+                <Link
                   key={link.label}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
+                  to={link.href}
+                  onClick={(e) => handleLinkClick(e, link.href)}
                   className="block px-3 py-4 text-base font-medium text-gray-200 hover:text-brand-400 hover:bg-white/5 rounded transition-colors uppercase tracking-wider border-b border-white/5"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
               <div className="pt-6">
                  <a

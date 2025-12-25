@@ -1,31 +1,30 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Stats from './components/Stats';
-import Services from './components/Services';
-import Features from './components/Features';
-import Gallery from './components/Gallery';
-import Contact from './components/Contact';
+import Home from './components/Home';
+import AboutPage from './components/AboutPage';
 import Footer from './components/Footer';
 import MobileStickyBar from './components/MobileStickyBar';
+import ScrollToTop from './components/ScrollToTop';
 
 const App: React.FC = () => {
   return (
-    <div className="bg-industrial-950 min-h-screen text-gray-200 font-sans selection:bg-brand-500 selection:text-white pb-24 md:pb-0">
-      <Navbar />
-      
-      <main>
-        <Hero />
-        <Stats />
-        <Services />
-        <Features />
-        <Gallery />
-        <Contact />
-      </main>
-      
-      <Footer />
-      <MobileStickyBar />
-    </div>
+    <Router>
+      <ScrollToTop />
+      <div className="bg-industrial-950 min-h-screen text-gray-200 font-sans selection:bg-brand-500 selection:text-white pb-24 md:pb-0">
+        <Navbar />
+        
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutPage />} />
+          </Routes>
+        </main>
+        
+        <Footer />
+        <MobileStickyBar />
+      </div>
+    </Router>
   );
 };
 
