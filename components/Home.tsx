@@ -1,36 +1,30 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import Hero from './Hero';
-import Stats from './Stats';
-import Services from './Services';
-import Features from './Features';
-import Gallery from './Gallery';
-import Contact from './Contact';
+import React from 'react';
 
 const Home: React.FC = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.replace('#', '');
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    }
-  }, [location]);
-
   return (
-    <>
-      <Hero />
-      <Stats />
-      <Services />
-      <Features />
-      <Gallery />
-      <Contact />
-    </>
+    <div className="home">
+      <section className="home-hero">
+        <div className="hero-content">
+          <h1>Welcome to Hemkunt Signage</h1>
+          <p>Your Premier Destination for Digital Signage Solutions</p>
+          <button className="cta-button">Get Started</button>
+        </div>
+      </section>
+      <section className="features">
+        <div className="feature-card">
+          <h3>Feature One</h3>
+          <p>Description of your first feature</p>
+        </div>
+        <div className="feature-card">
+          <h3>Feature Two</h3>
+          <p>Description of your second feature</p>
+        </div>
+        <div className="feature-card">
+          <h3>Feature Three</h3>
+          <p>Description of your third feature</p>
+        </div>
+      </section>
+    </div>
   );
 };
 
